@@ -1,36 +1,31 @@
 'use strict';
 
-const favoriteModel = require('./favorite/model');
+
 const { Sequelize, DataTypes } = require('sequelize');
-// const clothesModel = require('./clothes/model.js');
-const petsModel = require('./pets/model');
+
 const userModel = require('./user/model.js');
+const catModel = require('./cats/model.js');
+const dogModel = require('./dogs/model.js');
+const rabbitModel = require('./rabbits/model.js');
+const accessoriesModel = require('./Accessories/model.js');
 const Collection = require('./data-collection.js');
 
 const DATABASE_URL = process.env.DATABASE_URL || 'sqlite:memory:';
 
 const sequelize = new Sequelize(DATABASE_URL);
-// const food = foodModel(sequelize, DataTypes);
-
-// const clothes = clothesModel(sequelize, DataTypes);
-
-const favorite = favoriteModel(sequelize, DataTypes);
-
-
-const pets = petsModel(sequelize, DataTypes);
 
 const users = userModel(sequelize, DataTypes);
+const cats = catModel(sequelize, DataTypes);
+const dogs = dogModel(sequelize, DataTypes);
+const rabbits = rabbitModel(sequelize, DataTypes);
+const accessories = accessoriesModel(sequelize, DataTypes);
 
 module.exports = {
   db: sequelize,
-
-  //   food: new Collection(food),
-  // clothes: new Collection(clothes),
-
-  favorite: new Collection(favorite),
-
-  pets: new Collection(pets),
-
   users: new Collection(users),
+  cats: new Collection(cats),
+  dogs: new Collection(dogs),
+  rabbits: new Collection(rabbits),
+  accessories: new Collection(accessories),
   userModel: userModel(sequelize, DataTypes)
 };
