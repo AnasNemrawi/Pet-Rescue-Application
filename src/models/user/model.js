@@ -11,7 +11,7 @@ const userModel = (sequelize, DataTypes) => {
     username: { type: DataTypes.STRING, required: true, unique: true },
     password: { type: DataTypes.STRING, required: true },
 
-    role: { type: DataTypes.ENUM('visitor','user'), required: true, defaultValue: 'visitor'},
+    role: { type: DataTypes.ENUM('visitor', 'user'), required: true, defaultValue: 'visitor' },
 
     token: {
       type: DataTypes.VIRTUAL,
@@ -28,7 +28,7 @@ const userModel = (sequelize, DataTypes) => {
       get() {
         const acl = {
           visitor: ['read'],
-          user:['read', 'create', 'update', 'delete'],
+          user: ['read', 'create', 'update', 'delete'],
         };
         return acl[this.role];
       }
@@ -44,7 +44,7 @@ const userModel = (sequelize, DataTypes) => {
     const user = await this.findOne({ where: { username } });
     const valid = await bcrypt.compare(password, user.password);
     if (valid) { return user; }
-    throw new Error('Invalid User');
+    throw new Error('Invalid user');
   };
 
   model.authenticateToken = async function (token) {
@@ -52,7 +52,7 @@ const userModel = (sequelize, DataTypes) => {
       const parsedToken = jwt.verify(token, SECRET);
       const user = this.findOne({ where: { username: parsedToken.username } });
       if (user) { return user; }
-      throw new Error("User Not Found");
+      throw new Error("user Not Found");
     } catch (e) {
       throw new Error(e.message)
     }
