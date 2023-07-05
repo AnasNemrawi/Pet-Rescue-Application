@@ -19,6 +19,10 @@ app.use(express.json());
 
 app.use(logger);
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.use('/api/v1', v1Routes);
 app.use('/api/v2', v2Routes);
 app.use(authRoutes);
