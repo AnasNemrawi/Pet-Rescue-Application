@@ -1,22 +1,18 @@
 'use strict';
 
-const pets = (sequelize, DataTypes) => sequelize.define('pets', {
+const Accessories = (sequelize, DataTypes) => sequelize.define('Accessories', {
   name: {
     type: DataTypes.STRING,
     allowNull:false
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
   },
   image: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  age: {
+  price: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
 });
 
-module.exports = pets;
+module.exports = Accessories;

@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET || '123';
 
 const userModel = (sequelize, DataTypes) => {
-  const model = sequelize.define('Users', {
+  const model = sequelize.define('users', {
     username: { type: DataTypes.STRING, required: true, unique: true },
     password: { type: DataTypes.STRING, required: true },
 
