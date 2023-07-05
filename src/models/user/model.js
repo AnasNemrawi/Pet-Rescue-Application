@@ -4,13 +4,15 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const SECRET = process.env.SECRET || 'amman401d17';
+const SECRET = process.env.SECRET || '123';
 
 const userModel = (sequelize, DataTypes) => {
-  const model = sequelize.define('users', {
+  const model = sequelize.define('Users', {
     username: { type: DataTypes.STRING, required: true, unique: true },
     password: { type: DataTypes.STRING, required: true },
-    role: { type: DataTypes.ENUM('user',  'admin'), required: true, defaultValue: 'user'},
+
+    role: { type: DataTypes.ENUM('visitor','user'), required: true, defaultValue: 'visitor'},
+
     token: {
       type: DataTypes.VIRTUAL,
       get() {
@@ -25,8 +27,8 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get() {
         const acl = {
-          user: ['read',],
-          admin: ['read', 'create', 'update', 'delete']
+          visitor: ['read'],
+          user:['read', 'create', 'update', 'delete'],
         };
         return acl[this.role];
       }
@@ -39,7 +41,6 @@ const userModel = (sequelize, DataTypes) => {
   });
 
   model.authenticateBasic = async function (username, password) {
-    console.log(username, password)
     const user = await this.findOne({ where: { username } });
     const valid = await bcrypt.compare(password, user.password);
     if (valid) { return user; }
@@ -49,7 +50,7 @@ const userModel = (sequelize, DataTypes) => {
   model.authenticateToken = async function (token) {
     try {
       const parsedToken = jwt.verify(token, SECRET);
-      const user = this.findOne({where: { username: parsedToken.username } });
+      const user = this.findOne({ where: { username: parsedToken.username } });
       if (user) { return user; }
       throw new Error("User Not Found");
     } catch (e) {
