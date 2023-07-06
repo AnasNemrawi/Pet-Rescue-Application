@@ -1,6 +1,6 @@
 # Pet-Rescue-Application 
 
-## author : Tasneem Hassasneh, Anas Nimrawi
+## author : Tasneem Hassasneh, Anas Nemrawi
 
 ## About app: 
 
